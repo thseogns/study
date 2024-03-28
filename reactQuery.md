@@ -47,6 +47,10 @@ npm install react-query 로 설치
     }
 ```
 
+### 대표적 기능
+
+기본적으로 GET 에는 useQuery가, PUT, UPDATE, DELETE에는 useMutation이 사용됨.
+
 ### useQuery()
 
     const {data, error, isError, isSuccess} = useQuery(queryKey, queryFn)  // 쿼리키, 쿼리펑션을 가져옴
@@ -94,3 +98,103 @@ Promis가 처리하는 함수, fatch하는 코드,axios와 같이 서버에 api�
 
 
 ```
+
+### useQuery 동기적으로 실행
+
+useQuery에서 enabled 옵션을 사용하면 비동기 함수인 useQuery를 동기적으로 사용 가
+능하다. useQuery의 세 번째 인자로 다양한 옵션 값들이 들어가는데, 여기서 enabled
+에 값을 대입하면 해당 값이 true일 때 useQuery를 동기적으로 실행한다.
+
+```.js
+const { data: todoList, error, isFetching } = useQuery({
+	queryKey: ["todos"],
+  	queryFn: fetchTodoList,
+});
+const { data: nextTodo, error, isFetching } = useQuery({
+  queryKey: ["nextTodos"],
+  queryFn: fetchNextTodoList,
+  enabled: !!todoList // true가 되면 fetchNextTodoList를 실행한다
+});
+```
+
+### useQueries
+
+여러 개의 useQuery를 한 번에 실행하고자 하는 경우, 기존의 Promise.all()처럼 묶어
+서 실행할 수 있도록 도와준다!
+
+```.js
+const ids = [1, 2, 3]
+const results = useQueries({
+  queries: ids.map((id) => ({
+    queryKey: ['post', id],
+    queryFn: () => fetchPost(id),
+    staleTime: Infinity,
+  })),
+})
+
+// 두 query에 대한 반환값이 배열로 묶여 반환된다.
+
+// 만일 반환된 배열에 대해 통합된 값을 불러오고 싶다면, 아래와 같이 combine 설정을 통해 데이터를 한 번에
+ 반환할 수 있다. 이외에도 배열을 다루는 메서드들을 이용해 반환값에 대한 전처리를 수행할 수 있다.
+
+const ids = [1, 2, 3]
+const combinedQueries = useQueries({
+  queries: ids.map((id) => ({
+    queryKey: ['post', id],
+    queryFn: () => fetchPost(id),
+  })),
+  combine: (results) => {
+    return {
+      data: results.map((result) => result.data),
+      pending: results.some((result) => result.isPending),
+    }
+  },
+})
+```
+
+### useMutation
+
+PUT, UPDATE, DELETE 와 같이 값을 변경할 때 사용하는 API다. 반환값은 useQuery와동
+일하다.
+
+```.js
+
+function App() {
+  const mutation = useMutation({
+    mutationFn: (newTodo) => {
+      return axios.post('/todos', newTodo)
+    },
+  })
+
+  return (
+    <div>
+      {mutation.isLoading ? (
+        'Adding todo...'
+      ) : (
+        <>
+          {mutation.isError ? (
+            <div>An error occurred: {mutation.error.message}</div>
+          ) : null}
+
+          {mutation.isSuccess ? <div>Todo added!</div> : null}
+
+          <button
+            onClick={() => {
+              mutation.mutate({ id: new Date(), title: 'Do Laundry' })
+            }}
+          >
+            Create Todo
+          </button>
+        </>
+      )}
+    </div>
+  )
+}
+```
+
+위의 코드에서 볼 수 있듯이 반환값은 useQuery와 동일하지만, 처음 사용 시에 post
+비동기 함수를 넣어주었다. 이때 useMutation의 첫 번째 파라미터에 비동기 함수가 들
+어가고, 두 번째 인자로 상황 별 분기 설정이 들어간다는 점이 차이이다.
+
+실제 사용 시에는 mutation.mutate 메서드를 사용하고, 첫 번째 인자로 API 호출 시에
+전달해주어야하는 데이터를 넣어주면 된다.
