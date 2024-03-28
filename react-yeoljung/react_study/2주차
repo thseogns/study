@@ -1,0 +1,214 @@
+props사용 하여 상위 컴포넌트에서 하위 컴포넌트로 정보를 전달할 수 있다.
+
+자식 컴포넌트에 객체와 변수를 전달할 수 있다.
+
+자식컴포넌트에서 공통적인 props를 통해 부모 컴포넌트로부터 전달받은 자료에 접근할 수 있다.
+
+props선언시에 {}사이에 값을 넣어준다 ex) ({sss ,ddd}) sss와ddd를 전달 
+
+기본 값은 sss=150 <= 이런식으로 명시해준다.sss가 undefind 일 시 기본값으로 150이 전달
+
+...객체이름= 모든 props값들
+
+children이란 무엇인가
+
+props는 직접적인 접근으로 변경하지 말고 State hook을 이용해 변경해주어야 한다.(자세한 내용은 state에서 이유 잘모르곘음 재설정되서 무한루프돼서그런가?)
+
+jsx를 return 반환할수 있다
+삼항연산자는 지저분해질 수 있다.
+
+@@ && !! 이면 @@ 가 참일 때 !! 실행
+
+@@가 숫자일 시  0의 값이 반환되면 boolean인 true false중 ture가 반환되어 값이 0이더라도 출력되거나 실행됨  (해결방법 : @@>0 && !!
+
+
+데이터 배열로 만들기 => maping 
+ const listItems = people.map(person=> <li>{person}</li>);
+
+
+<ul>{listItem}</ul>
+
+filter: 
+@@,filter(!!=>!!.profession === ‘chemist’);
+
+모든 map 에는key값이 필요 uuid 사용
+random으로 만들시 랜더링할 때 key값이 일치하지 않을 수 있음
+
+예제 1? if문이 더간단할 듯?
+
+
+
+
+
+순수함수는 계산만 실행 (객체, 변수를 변화시키지 않음) = component를 순수함수로만 작성하면 이점이 많음
+
+같은값을 주었을 때 값이 변하는 함수는 좋지 않다
+
+props, state, context <= 랜더링하는 동안 읽음
+
+사용자의 변경에 의한 변수 저장은 state로 해야한다.**
+
+
+component가 렌더링되는 동안에는 변수나 객체를 변경해서는 안 된다.
+
+strict mode : component를 두 번 호출함 < 이것이 있어서 규칙을 위반하는(변수나 객체값이 변화되는 ) component를 찾기 쉽다.
+
+root component를 <React.StrictMode>로 감싸면 strict mode를 사용할 수 있다.
+
+변이가 local안에서 일어나면 렌더링시 영향이 미치지않아서 상관없다.
+
+
+사이드이팩트(부작용)를 일으키는곳 
+
+Effect는 최후의 수단
+
+
+순수성이란 무엇이며 버그를 방지하는 데 도움이 되는 방법
+
+렌더링 단계에서 변경 사항을 제외하여 컴포넌트를 순수하게 유지하는 방법
+
+엄격 모드를 사용하여 컴포넌트에서 실수를 찾는 방법
+Keeping Components Pure 마지막 문제
+https://codesandbox.io/s/jovial-elbakyan-3koi8p
+
+
+
+
+
+
+
+event handler
+
+eventHandler는 인라인으로 함수를 정의할 수 있다.
+
+eventHandler는 함수를 호출하는방식이 아닌 전달하는 방식이다 
+1 onclick = {handle} 0  2 onclick = {handle()}x 
+1번 방식은 클릭시 함수를 호출하게 onClick에 전달 
+2번방식은 렌더링시 handle()을 읽으면서 호출 (onClick안에 set이 있는 듯)
+
+<button onClick={alert('You clicked me!')}> 이 방식은 랜더링시 발생하고 클릭시 함수가실행되지 않음 이러한 함수는 <button onClick={() => alert('You clicked me!')}> 인라인으로 함수를 정의하여야 함
+
+
+ <button onClick={() => alert(message)}>
+      {children}
+    </button>
+
+<AlertButton message="Playing!">
+        Play Movie
+</AlertButton>
+<AlertButton message="Uploading!">
+        Upload Image
+</AlertButton>
+
+
+
+e.stopPropagation(); 사용시 eventHandler를 출문으로 작성해야함
+
+
+export default function ColorSwitch({ onChangeColor }) {
+
+
+  return <button onClick={ e =>{  e.stopPropagation();
+    onChangeColor();}}>Change color</button>;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+eventHandler를props로 전달할 수 있다.
+
+서로 다른component 서로 다른 함수를 props로 전달 하여 같은 명으로 사용하여도 따로 작동이 됨 
+ comprnent마다 함수가 주어지기 떄문  (props를 onClick으로 통일)
+
+
+function Toolbar({ onPlayMovie, onUploadImage }) {
+  return (
+    <div>
+      <Button onClick={onPlayMovie}>Play Movie</Button>
+      <Button onClick={onUploadImage}>Upload Image</Button>
+    </div>
+  );
+}
+
+function Button({ onClick, children }) {
+  return <button onClick={onClick}>{children}</button>;
+}
+
+	
+이런 게 되더라.
+
+실행 순서는 자식 component => 부모 component
+
+  e.stopPropagation(); <=를 사용하면 자식에서 일어난onClick을 억제하여 부모로 전달하지 않을 수 있다. (부모에 있던 onClick시 발생하는 함수를 억제)
+
+e.stopPropagation()은 부모 태그에 연결된 onClick 실행을 막음
+
+onClickCapture <=를 사용하면 e.stopPropagation();를 사용하더라도 onClick함수를 호출할 수 있다.
+
+form onSubmit 제출 함수는 전체 페이지를 다시 로드한다(e.preventDefault(); <=를 이용하여 페이지 리로딩을 막는다)
+
+
+
+
+
+1번문제
+export default function LightSwitch() {
+  function handleClick() {
+    let bodyStyle = document.body.style;
+    if (bodyStyle.backgroundColor === "black") {
+      bodyStyle.backgroundColor = "white";
+    } else {
+      bodyStyle.backgroundColor = "black";
+    }
+  }
+
+  return <button onClick={handleClick}>Toggle the lights</button>; 
+ //함수호출해서바꿔줌
+}
+
+
+
+
+
+useState로 상태를 저장한다. 
+
+state가 local인 이유
+
+state를 사용하지 않는 경우 랜더링시 초기화 되므로 변수를 저장하는데 어려움이 있다.
+
+hook은 react 상태를 다루는 기본함수?
+hook은 component의 최상위에서만 호출 할 수 있다. 
+
+component의 수마다 state값이 주어진다. component마다 할당되는 메모리값이 있다.(각 컴포넌트는 독립적이다.)
+state는 독립적인 듯? java의 static함수랑 비슷한느낌
+
+컴포넌트가 렌더링시 일부 정보를 기억해야 하는 경우 state를 사용
+
+
+
+랜더링 및 커밋 <***
+
+렌더링 트리거(손님의 주문을 주방에 전달)
+컴포넌트 렌더링(주방에서 주문 준비)
+DOM에 커밋(주문을 테이블에 배치)
+
+컴포넌트가 랜더링될 때 = 초기랜더링 , 상위컴포넌트의 상태업데이트(컴포넌트 재평가)
+
+컴포넌트가 초기랜더링을 마친뒤에는 상태를 업데이트 하는 것 으로 컴포넌트를 재평가할 수 있다.
+
+상태업데이트 = > 트리거한 함수 컴포넌트 호출=>업데이트된 컴포넌트가 다른 컴포넌트를return 하고 다시 상태업데이트 =>트리거한 함수컴포넌트 호출 (반복)
+
+랜더링은 항상 순수한계산으로 이루어져야함
+
+
+1Trigger
+2Render
+3Commit 

@@ -1,0 +1,41 @@
+
+1) 컴포넌트 내보내기 export 
+
+리액트 함수는 이름이 대문자로 시작해야 한다.
+
+jsx는 html처럼 생긴 자바스크립트 이다
+
+return 하는 마크업(jsx)는 괄호로 묶여있어야 한다 ex)div
+
+마크업중 대문자로 시작하는 것이 Component이다
+
+컴포넌트 안에 다른 완성된 Component를 넣을 수 있지만 함수 형식으로 정의 하는 것은 안됨.
+
+
+
+
+2) 컴포넌트 가져오기
+
+root App 최상위 컴포넌트? 
+
+export 는 {} 로 (import {Button}) from “./button.js”;
+export Default 는 기본의 방식
+
+동일한기본내보내기?
+
+명명되지 않은 것은 이름을 일치시켜주지 않아도 된다.
+
+
+JSX규칙 하나의 루트엘리먼트를 반환한다.
+
+(js에서 객체를 배열로 래핑하고 반환하기 때문)
+
+카멜케이스로 작성하기 ex)className , onClick  (예외 aria-,  data-)
+
+
+
+3) JSX가 존재하는 이유는? 간결함? js처럼 일일이 집어주지않아도돼서 편리함
+
+jsx 에 {}를 사용 시 문자열이 아닌 js를 사용 할 수 있고 변수도한 삽입이 가능하다.
+
+인라인 스타일 프로퍼티는 카멜케이스로 작성 ex) backgraound-color 는 컴포넌트에서 backgraoundColor
