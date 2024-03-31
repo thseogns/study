@@ -16,3 +16,16 @@ View간의 계층처리가 필요
 데이터 바인딩.
 MVVM패턴,
 FLUX아키텍쳐
+
+(React)
+
+Presentation & Container
+React 디자인 패턴 중 가장 기본적인 패턴, 데이터 로직을 수행하는 Container 컴포넌트와 데이터를 출력하는 presentation 컴포넌트로 구분한다.
+
+Container 컴포넌트
+API호출, State관리, 이벤트 처리등의 작업을 수행하는 컴포넌트 입니다.
+변경된 상태 값을 props를 통해 Presentation 컴포넌트로 전달.
+
+presentation 컴포넌트
+UI를 표시하는 컴포넌트
+직접 상태값을 관리하지 않고 presentation 컴포넌트가 전달해준 props를 받아 출력한다.
