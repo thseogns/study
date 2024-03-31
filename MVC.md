@@ -1,4 +1,4 @@
-(backEnd)
+(BE)
 
 1. Model은 Controller와 View에 의존하지 않아야 한다.
    (Model내부에 Controller와 View에 관련된 코드가 있으면 안된다.)
@@ -7,3 +7,12 @@
 3. View가 Model로부터 데이터를 받을 때는, 사용자마다 다르게 보여주어야 하는 데이터에대해서만 받아야 한다. (사용자들이 동일하게 보게되는 데이터는 제외)
 4. Controller는 Model과 View에 의존해도 된다.(Controller내부에는 Model과 View의 코드가 있을 수 있다.)
 5. View가 Model로부터 데이터를 받을 때, 반드시 Controller에서 받아야 한다.
+
+(FE)
+View가 아주많다.
+양방향처리가 필요.
+View간의 계층처리가 필요
+
+데이터 바인딩.
+MVVM패턴,
+FLUX아키텍쳐
