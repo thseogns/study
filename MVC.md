@@ -109,3 +109,5 @@ function SearchFormContainer() {
 
 export default SearchFormContainer;
 ```
+
+Custom Hooks 으로 나누는 방식
