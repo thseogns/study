@@ -29,3 +29,83 @@ API호출, State관리, 이벤트 처리등의 작업을 수행하는 컴포넌�
 presentation 컴포넌트
 UI를 표시하는 컴포넌트
 직접 상태값을 관리하지 않고 presentation 컴포넌트가 전달해준 props를 받아 출력한다.
+
+적용전 코드
+
+```.js
+function SearchForm() {
+
+    const [searchKey, setSearcKey] = useState();
+
+    function onChange(event) {
+        setSearcKey(event.target.value);
+    }
+
+    function onSubmit(event) {
+        event.preventDefault();
+        console.log(searchKey);
+    }
+
+    return (
+        <form onSubmit={onSubmit}>
+            <div>
+                <label>제목</label>
+                <input type="text" value={searchKey} onChange={onChange} name="searchKey"/>
+                <button type="submit">검색</button>
+            </div>
+        </form>
+    )
+}
+
+export default SearchForm;
+```
+
+적용 후 코드
+
+```.js
+// Presentation Component
+function SearchFormView() {
+
+    const {searchKey, onChange, onSubmit} = props;
+
+    return (
+        <form onSubmit={onSubmit}>
+            <div>
+                <label>제목</label>
+                <input type="text" value={searchKey} onChange={onChange} name="searchKey"/>
+                <button type="submit">검색</button>
+            </div>
+        </form>
+    )
+}
+export default SearchFormView;
+```
+
+우선 Presentation 컴포넌트 만들기 위해 새로운 js(ts)파일을 만들고 SearchFormView라고 명명하였습니다. 기존 컴포넌트에서 렌더링 되었을 JSX 코드를 그대로 가져오고, 해당 컴포넌트에서 선언되지 않은 states나 methods는 props로 받아오도록 처리합니다.
+
+```.js
+// Container Component
+function SearchFormContainer() {
+
+    const [searchKey, setSearcKey] = useState();
+
+    function onChange(event) {
+        setSearcKey(event.target.value);
+    }
+
+    function onSubmit(event) {
+        event.preventDefault();
+        console.log(searchKey);
+    }
+
+    return (
+        <SearchFormView
+            searchKey={searchKey}
+            onChange={onChange}
+            onSubmit={onSubmit}
+        />
+    )
+}
+
+export default SearchFormContainer;
+```
