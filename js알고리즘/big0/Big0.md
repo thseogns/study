@@ -129,3 +129,25 @@ function frintAllPairs (n){
 ```
 
 O(n)2개의 루프가 중첩되었다. 따라서 O(n²)이라 할 수 있다.
+
+O(2n) x = O(n)
+O(500) x = O(1)
+O(13n²) x = O(n²)
+
+아래의 경우는 어떨까?
+
+```.js
+function logAtleast5(n){
+    for (var i = 1; i <=Math.max(5, n); i++) { //max
+        console.log(i);
+    }
+}
+function logAtMost5(n){
+    for (var i = 1; i <=Math.min(5, n); i++) { //min
+        console.log(i);
+    }
+}
+```
+
+n과 5중 큰값을 출력하는 max의 경우 n의 값만큼 증가하기 때문에 O(n) 이라 할 수 있다.
+하지만 min의 경우 5와n값중 작은 값을 출력하기 때문에 n의 값이 증가해도 값이 5이상 늘어나지 않는다. 따라서 O(1)이라 할 수 있다.
