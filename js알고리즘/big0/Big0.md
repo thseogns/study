@@ -75,6 +75,8 @@ https://rithmschool.github.io/function-timer-demo/
 
 ## BigO란 무엇인가?
 
+### 시간복잡도
+
 f((n) = n) n만큼 증가
 f((n) = n²) n만큼 ²증가
 f((n) = 1) 영향을 받지않음
@@ -152,5 +154,37 @@ function logAtMost5(n){
 n과 5중 큰값을 출력하는 max의 경우 n의 값만큼 증가하기 때문에 O(n) 이라 할 수 있다.
 하지만 min의 경우 5와n값중 작은 값을 출력하기 때문에 n의 값이 증가해도 값이 5이상 늘어나지 않는다. 따라서 O(1)이라 할 수 있다.
 
-O(n의 순서)
+O(n의 순서)  
 ![alt text](image.png)
+
+### 공간복잡도
+
+입력 되는 것을 제외한 알고리즘 자체가 필요로 하는 공간
+
+아래의 공간복잡도를 알아보자
+
+```.js
+function addUpTo (arr){
+    let total = 0; // 변수 하나
+    for (let i = 1; i <= arr.length; i++){ // i값 변수 둘
+        total += arr[i];
+    }
+return total;
+}
+```
+
+위 코드의 공간복잡도는 O(1)이다.
+
+그렇다면 아래 코든는 어떨까?
+
+```.js
+function double (arr){
+    let newArr = [];
+    for (let i = 1; i <= arr.length; i++){
+        newArr.push(2 * arr[i]); //arr의 길이에 따라 차지하는 공간이 늘어난다
+    }
+return newArr;
+}
+```
+
+위 코드의 공간복잡도는 O(n)이다. 받는 인수에 따라 길이가 n만큼 증가하기 떄문이다.
