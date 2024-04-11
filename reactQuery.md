@@ -72,7 +72,7 @@ react-query는 캐싱으로 관리된다. (가져온 데이터를 저장한다.)
 ```.js
     const { data: data1 } = useQuery(['users1'], queryFn1);
 
-     const { data: data2 } = useQuery(['users1'], queryFn2);
+    const { data: data2 } = useQuery(['users1'], queryFn2);
 ```
 
 queryFn1과 queryFn2는 다르지만 한번만 요청되고 data2에 같은 값이 저장된다.(캐상
