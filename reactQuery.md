@@ -23,7 +23,7 @@ client는 상태관리 라이브러리로 관리(redux, recoill등), ReactQuery�
 query가 데이터를 업데이트 하는 기준.
 
 ```.js
-     refetchOnWindowFocus, //default: true
+refetchOnWindowFocus, //default: true
 refetchOnMount, //default: true
 refetchOnReconnect, //default: true
 staleTime, //default: 0
