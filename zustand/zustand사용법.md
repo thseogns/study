@@ -7,7 +7,7 @@ import { create } from 'zustand'  // 크리에이트로 가져온다.
 
 const useStore = create((set) => ({  // 유즈 스토어로 변수 저장
 count: 1,   // 상태를 만들어준다.
-inc: () => set((state) => ({ count: state.count + 1 })), //inc는 count 상태에 접근해서 값을 1증가시키는 함수다.
+inc: () => set((state) => ({ count: state.count + 1 })), //inc는 count 상태에 접근해서 값을 1증가시키는 함수다. (set으로만 변경가능하다.)
 }))
 
 function Counter() {
@@ -45,4 +45,9 @@ function Counter() {
     </div>
   )
 }
+```
+
+```.js
+import {devtools}from "zustand/middleware" // 데브툴스 사용해서 디버깅 할 수 있다. (리덕스 데브툴스를 인스톨후 사용)
+import {persist}from "zustand/middleware" // 로컬스토리지에 저장할 수 있다.
 ```
