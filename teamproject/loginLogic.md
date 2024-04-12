@@ -1,7 +1,7 @@
 # LoginModal
 
-아래 코드는 기존에 있던 팀프로젝트 코드이다.
-아래의 코드에 reactQuery와 zustand를 적용하여 가독성을 높히고 120줄이던 코드를 90줄로 줄였다.
+아래 코드는 기존에 있던 팀프로젝트 코드입니다
+아래의 코드에 reactQuery와 zustand를 적용하여 가독성을 높히고 120줄이던 코드를 90줄로 줄였습니다.
 
 ```.ts
 import { faComment } from '@fortawesome/free-solid-svg-icons';
@@ -137,7 +137,7 @@ export default LoginModal;
 
 ## 바뀐코드
 
-기존에 있던ContextApi 코드를 가져와 TypeScript를 적용하고 reactQuery와 zustand로 옮겨주었다.
+기존에 있던ContextApi 코드를 가져와 TypeScript를 적용하고 reactQuery와 zustand로 옮겨주었습니다.
 
 ```.ts
 //utils/zustand/auth/loginState.ts
