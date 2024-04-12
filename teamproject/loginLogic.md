@@ -143,27 +143,11 @@ export default LoginModal;
 //utils/zustand/auth/loginState.ts
 import { create } from 'zustand';
 
-type UserAuthInfo = {
-signupData: { userName: string; password: string };
-setUserName: (updateUserName: string) => void;
-setPassword: (updatePassword: string) => void;
-};
 type LoginStat = {
 loginState: boolean;
 setIsLogin: (toggleLoginState: boolean) => void;
 setIsLogout: (toggleLoginState: boolean) => void;
 };
-export const useAuthInfo = create<UserAuthInfo>()((set) => ({
-signupData: { userName: '', password: '' },
-setUserName: (updateUserName) =>
-set((state) => ({
-signupData: { ...state.signupData, userName: updateUserName },
-})),
-setPassword: (updatePassword) =>
-set((state) => ({
-signupData: { ...state.signupData, password: updatePassword },
-})),
-}));
 
 const useLoginState = create<LoginStat>()((set) => ({
 loginState: false,
@@ -285,15 +269,15 @@ const useLogout = () => {
 LoginModal
 
 ```.ts
+import React from 'react';
 import { faComment } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useAuthInfo } from '../../utils/zustand/auth/loginState';
 import { useShowLoginModal } from '../../utils/zustand/display/displayState';
 import { useLogin } from '../../utils/reactQuery/loginQuery';
 const LoginModal = () => {
   const { showModal, setShowModal } = useShowLoginModal();
-  const { userName, password } = useAuthInfo().signupData;
-  const { setUserName, setPassword } = useAuthInfo();
+  const [userName, setUserName] = React.useState<string>('');
+  const [password, setPassword] = React.useState<string>('');
   const apiUrl = process.env.REACT_APP_CORE_API_BASE_URL;
   const handleLogin = async (e: any) => {
     e.preventDefault();
@@ -378,5 +362,6 @@ const LoginModal = () => {
 };
 
 export default LoginModal;
+
 
 ```
